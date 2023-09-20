@@ -1,10 +1,13 @@
 using Assets.Scripts.GamePlay.Interface;
 using Assets.Scripts.GamePlay.Player;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Player : MonoBehaviour, IMoveable
+public class Player : MonoBehaviour, IMoveable, IFireable
 {
     [SerializeField] private PlayerMove _playerMove;
+    [SerializeField] private PlayerFire _playerFire;
+    [SerializeField] private Button _buttonFire;
 
     private void FixedUpdate()
     {
@@ -14,5 +17,15 @@ public class Player : MonoBehaviour, IMoveable
     public void Move()
     {
         _playerMove.JoystickMove();
+    }
+
+    private void OnEnable()
+    {
+        _buttonFire.onClick.AddListener(Fire);
+    }
+
+    public void Fire()
+    {
+        _playerFire.Fire();
     }
 }
