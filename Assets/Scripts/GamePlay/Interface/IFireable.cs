@@ -1,7 +1,7 @@
 ﻿namespace Assets.Scripts.GamePlay.Interface
 {
-    public interface IMoveable
+    public interface IFireable
     {
-        public void Move();
+        public void Fire();
     }
 }
