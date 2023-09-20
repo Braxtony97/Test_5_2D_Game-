@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.GamePlay.Player
@@ -36,10 +37,17 @@ namespace Assets.Scripts.GamePlay.Player
                 {
                     bullet.transform.position = Position.transform.position;
                     bullet.SetActive(true);
+                    StartCoroutine(DeactivateBullet(bullet));
                     return bullet;
                 }
             }
             return null;
+        }
+
+        IEnumerator DeactivateBullet (GameObject Bullet)
+        {
+            yield return new WaitForSeconds(_lifeTimeBullet);
+            Bullet.SetActive(false);   
         }
 
 
