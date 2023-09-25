@@ -9,7 +9,10 @@ namespace Assets.Scripts.GamePlay.ItemScripts
     public class InventoryManager : MonoBehaviour
     {
         public static InventoryManager Instance;
-        [SerializeField] private List<Item> _items = new List<Item>();
+
+        [SerializeField] private Dictionary<Item, int> _itemsDictionary = new Dictionary<Item, int>();
+
+        [SerializeField] private Toggle _toggleEnableRemoveItem;
 
         [SerializeField] private GameObject _itemPrefab; // 2D префаб объекта
         [SerializeField] private Transform _itemContentInventory; // где наш объект будет находится
@@ -21,12 +24,30 @@ namespace Assets.Scripts.GamePlay.ItemScripts
 
         public void AddItem (Item item)
         {
-            _items.Add(item);
+            if (_itemsDictionary.ContainsKey(item))
+            {
+                _itemsDictionary[item]++;
+                item.ItemQuantity++;
+            }
+            else
+            {
+                _itemsDictionary[item] = 1;
+                item.ItemQuantity = 1;
+
+            }
         }
 
         public void RemoveItem(Item item)
         {
-            _items.Remove(item);
+            if (_itemsDictionary.ContainsKey(item))
+            {
+                _itemsDictionary[item]--;
+                item.ItemQuantity--;
+                if (item.ItemQuantity <= 0)
+                {
+                    _itemsDictionary.Remove(item);
+                }
+            }
         }
 
         public void ListItems()
@@ -36,14 +57,36 @@ namespace Assets.Scripts.GamePlay.ItemScripts
                 Destroy(item.gameObject);
             }
 
-            foreach (var item in _items)
+            foreach (var item in _itemsDictionary)
             {
                 GameObject objectItem = Instantiate(_itemPrefab, _itemContentInventory);
                 var itemName = objectItem.transform.Find("ItemText").GetComponent<TextMeshProUGUI>();
+                var itemCount = objectItem.transform.Find("ItemCountButton/ItemCountButtonText").GetComponent<TextMeshProUGUI>();
                 var itemIcon = objectItem.transform.Find("ItemIcon").GetComponent<Image>();
 
-                itemIcon.sprite = item.SpriteItem;
-                itemName.text = item.NameItem;
+                itemIcon.sprite = item.Key.SpriteItem;
+                itemName.text = item.Key.NameItem;
+                itemCount.text = item.Key.ItemQuantity.ToString();
+            }
+        }
+
+        public void EnableRemoveItem()
+        {
+            if (_toggleEnableRemoveItem.isOn)
+            {
+                foreach (var item in _itemsDictionary)
+                {
+                    var objectItem = item.Key.GameObject;
+                    objectItem.transform.Find("ItemRemoveButton").gameObject.SetActive(true);
+                }
+            }
+            else
+            { 
+                foreach (var item in _itemsDictionary)
+                {
+                    var objectItem = item.Key.GameObject;
+                    objectItem.transform.Find("ItemRemoveButton").gameObject.SetActive(false);
+                }
             }
         }
     }
