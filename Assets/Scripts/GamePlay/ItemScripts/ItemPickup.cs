@@ -6,7 +6,13 @@ namespace Assets.Scripts.GamePlay.ItemScripts
     public class ItemPickup : MonoBehaviour
     {
         [SerializeField] private Item _item;
-        
+        private Collider2D _playerCollider;
+
+        private void Start()
+        {
+            _playerCollider = GameObject.Find("Player").GetComponent<Collider2D>();
+        }
+
         private void Pickup()
         {
             InventoryManager.Instance.AddItem(_item);
@@ -15,7 +21,7 @@ namespace Assets.Scripts.GamePlay.ItemScripts
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("Player"))
+            if (collision == _playerCollider)
             Pickup();
         }
     }

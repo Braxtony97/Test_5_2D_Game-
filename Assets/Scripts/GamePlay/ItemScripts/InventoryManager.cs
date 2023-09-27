@@ -74,18 +74,16 @@ namespace Assets.Scripts.GamePlay.ItemScripts
         {
             if (_toggleEnableRemoveItem.isOn)
             {
-                foreach (var item in _itemsDictionary)
+                foreach (Transform item in _itemContentInventory)
                 {
-                    var objectItem = item.Key.GameObject;
-                    objectItem.transform.Find("ItemRemoveButton").gameObject.SetActive(true);
+                    item.Find("ItemRemoveButton").gameObject.SetActive(true);
                 }
             }
             else
-            { 
-                foreach (var item in _itemsDictionary)
+            {
+                foreach (Transform item in _itemContentInventory)
                 {
-                    var objectItem = item.Key.GameObject;
-                    objectItem.transform.Find("ItemRemoveButton").gameObject.SetActive(false);
+                    item.Find("ItemRemoveButton").gameObject.SetActive(false);
                 }
             }
         }

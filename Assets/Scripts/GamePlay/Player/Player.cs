@@ -8,6 +8,8 @@ public class Player : MonoBehaviour, IMoveable, IFireable
     [SerializeField] private PlayerMove _playerMove;
     [SerializeField] private PlayerFire _playerFire;
     [SerializeField] private Button _buttonFire;
+    [SerializeField] private PlayerBulletBehaviour _playerBulletBehaviour;
+    [SerializeField] private BulletPoolPlayer _bulletPoolPlayer;
 
     private void FixedUpdate()
     {
