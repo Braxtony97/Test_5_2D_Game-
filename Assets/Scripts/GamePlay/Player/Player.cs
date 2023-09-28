@@ -10,10 +10,19 @@ public class Player : MonoBehaviour, IMoveable, IFireable
     [SerializeField] private Button _buttonFire;
     [SerializeField] private PlayerBulletBehaviour _playerBulletBehaviour;
     [SerializeField] private BulletPoolPlayer _bulletPoolPlayer;
+    [SerializeField] private Health _health;
 
     private void FixedUpdate()
     {
         Move();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _health.ChangeHealth(10);
+        }
     }
 
     public void Move()
