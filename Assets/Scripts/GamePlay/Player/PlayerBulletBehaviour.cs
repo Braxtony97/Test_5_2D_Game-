@@ -2,8 +2,10 @@
 
 namespace Assets.Scripts.GamePlay.Player
 {
+    [RequireComponent(typeof(Collider2D))]
+
     public class PlayerBulletBehaviour : MonoBehaviour
-    {
+    { 
         private float _bulletSpeed = 5f;
         private Transform _targetEnemy;
 
@@ -22,6 +24,14 @@ namespace Assets.Scripts.GamePlay.Player
             else
             {
                 transform.Translate(Vector2.right * _bulletSpeed * Time.deltaTime);
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D EnemyCollider)
+        {
+            if (EnemyCollider.CompareTag("Enemy"))
+            {
+                EnemyCollider.GetComponent<Health>().ChangeHealth(10);
             }
         }
     }

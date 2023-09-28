@@ -10,7 +10,7 @@ namespace Assets.Scripts.GamePlay.Player
         [SerializeField] private GameObject _bulletPlayerPrefab;
         [SerializeField] private Transform _targetEnemy;
 
-        private float _lifeTimeBullet = 3f;
+        private float _lifeTimeBullet = 2f;
         private List<GameObject> _bulletsPlayerPool;
 
         private void Start()
@@ -51,14 +51,6 @@ namespace Assets.Scripts.GamePlay.Player
             yield return new WaitForSeconds(_lifeTimeBullet);
             Bullet.SetActive(false);   
         }
-
-        /*private void OnTriggerEnter2D(Collider2D EnemyCollider)
-        {
-            if (EnemyCollider.CompareTag("Enemy"))
-            {
-                _targetEnemy = EnemyCollider.transform;
-            }
-        }*/
 
         private void OnTriggerStay2D(Collider2D EnemyCollider)
         {

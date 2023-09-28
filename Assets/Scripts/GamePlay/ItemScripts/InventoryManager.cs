@@ -11,11 +11,9 @@ namespace Assets.Scripts.GamePlay.ItemScripts
         public static InventoryManager Instance;
 
         [SerializeField] private Dictionary<Item, int> _itemsDictionary = new Dictionary<Item, int>();
-
         [SerializeField] private Toggle _toggleEnableRemoveItem;
-
-        [SerializeField] private GameObject _itemPrefab; // 2D префаб объекта
-        [SerializeField] private Transform _itemContentInventory; // где наш объект будет находится
+        [SerializeField] private GameObject _itemPrefab; 
+        [SerializeField] private Transform _itemContentInventory; 
 
         private void Awake()        
         {
